@@ -1,6 +1,6 @@
 ﻿namespace GADE6122DavidTristanPOE
 {
-    internal abstract class CharacterTile : Tile // Test for push
+    internal abstract class CharacterTile : Tile
     {
         // Character fields that store the hit points, hit point maximum, attack power and vision
         private int hitPoints, maxHitPoints, attackPower;
