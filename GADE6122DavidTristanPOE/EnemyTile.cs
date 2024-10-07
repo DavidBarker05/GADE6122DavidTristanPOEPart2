@@ -6,6 +6,8 @@
         {
         }
 
-       public abstract bool GetMove(out Tile tile);
+        public abstract bool GetMove(out Tile tile);
+
+        public abstract CharacterTile[] GetTargets();
     }
 }
