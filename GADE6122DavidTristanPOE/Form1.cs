@@ -107,6 +107,7 @@ namespace GADE6122DavidTristanPOE
         {
             lblDisplay.Text = gameEngine.ToString(); // Show level
             lblLevelNumber.Text = $"LEVEL {gameEngine.CurrentLevelNumber} OF {gameEngine.LevelAmt}"; // Show level number
+            lblHitPoints.Text = $"{gameEngine.HeroHitPoints}/{gameEngine.HeroMaxHitPoints} HIT POINTS"; // Show level number
         }
 
     }

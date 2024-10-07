@@ -33,6 +33,7 @@
             this.lblObjective = new System.Windows.Forms.Label();
             this.lblKey = new System.Windows.Forms.Label();
             this.lblControls = new System.Windows.Forms.Label();
+            this.lblHitPoints = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lblDisplay
@@ -71,7 +72,7 @@
             this.lblObjective.Size = new System.Drawing.Size(226, 198);
             this.lblObjective.TabIndex = 2;
             this.lblObjective.Text = "Objective:\r\nGet the Hero to\r\nthe Level Exit by\r\nmoving through the\r\nEmpty Spaces " +
-    "and\r\ndefeating Enemies.\r\nUse Health Pickup\r\nto heal lost\r\nhitpoints.";
+    "and\r\ndefeating Enemies.\r\nUse Health Pickup\r\nto heal lost hit\r\npoints.";
             // 
             // lblKey
             // 
@@ -96,12 +97,25 @@
             this.lblControls.TabIndex = 4;
             this.lblControls.Text = "Controls:\r\nW = Move Up\r\nA = Move Left\r\nS = Move Down\r\nD = Move Right";
             // 
+            // lblHitPoints
+            // 
+            this.lblHitPoints.Font = new System.Drawing.Font("Courier New", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblHitPoints.ForeColor = System.Drawing.Color.Brown;
+            this.lblHitPoints.Location = new System.Drawing.Point(253, 473);
+            this.lblHitPoints.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lblHitPoints.Name = "lblHitPoints";
+            this.lblHitPoints.Size = new System.Drawing.Size(212, 24);
+            this.lblHitPoints.TabIndex = 5;
+            this.lblHitPoints.Text = "label1";
+            this.lblHitPoints.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.CadetBlue;
             this.ClientSize = new System.Drawing.Size(706, 547);
+            this.Controls.Add(this.lblHitPoints);
             this.Controls.Add(this.lblControls);
             this.Controls.Add(this.lblKey);
             this.Controls.Add(this.lblObjective);
@@ -124,6 +138,7 @@
         private System.Windows.Forms.Label lblObjective;
         private System.Windows.Forms.Label lblKey;
         private System.Windows.Forms.Label lblControls;
+        private System.Windows.Forms.Label lblHitPoints;
     }
 }
 

@@ -29,9 +29,11 @@ namespace GADE6122DavidTristanPOE
         const int MIN_SIZE = 10; // Min size of level
         const int MAX_SIZE = 20; // Max size of level
 
-        // Read-only properties that expose the max amount of levels and the current level to be displayed on the form
+        // Read-only properties that expose the max amount of levels, the current level, the hit points and the max hit points of the hero to be displayed on the form
         public int LevelAmt { get { return levelAmt; } }
         public int CurrentLevelNumber { get { return currentLevelNumber; } }
+        public int HeroHitPoints { get { return currentLevel.HeroTile.HitPoints; } }
+        public int HeroMaxHitPoints { get { return currentLevel.HeroTile.MaxHitPoints; } }
 
         // Constructor for GameEngine object
         public GameEngine(int levelAmt)

@@ -10,6 +10,10 @@
         public Tile[] Vision { get { return vision; } }
         public bool IsDead { get { return hitPoints == 0; } }
 
+        // Read-only properties that expose the hit points and the max hit points of the hero to be displayed on the form
+        public int HitPoints { get { return hitPoints; } }
+        public int MaxHitPoints { get { return maxHitPoints; } }
+
         // Constructor for CharacterTile object
         public CharacterTile(Position position, int hitPoints, int attackPower) : base(position)
         {
