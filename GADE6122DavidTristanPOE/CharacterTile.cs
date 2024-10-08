@@ -26,6 +26,7 @@
         // Update's the character's vision
         public void UpdateVision(Level level)
         {
+            if (IsDead) return;
             vision[0] = level.Tiles[X, Y - 1];
             vision[1] = level.Tiles[X + 1, Y];
             vision[2] = level.Tiles[X, Y + 1];
@@ -35,6 +36,7 @@
         // Reduce health by damage taken
         public void TakeDamage(int damage)
         {
+            if (IsDead) return;
             hitPoints -= damage;
             if (hitPoints < 0) hitPoints = 0;
         }
@@ -42,11 +44,13 @@
         // Attack another character
         public void Attack(CharacterTile characterTile)
         {
+            if (IsDead) return;
             characterTile.TakeDamage(attackPower);
         }
 
         public void Heal(int hitPoints)
         {
+            if (IsDead) return;
             this.hitPoints += hitPoints;
             if (hitPoints > maxHitPoints) hitPoints = maxHitPoints;
         }

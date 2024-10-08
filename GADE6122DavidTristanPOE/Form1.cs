@@ -59,21 +59,21 @@ namespace GADE6122DavidTristanPOE
                     direction = GameEngine.Direction.Up;
                     wPressed = true;
                     break;
-                case 'D':
-                    direction = GameEngine.Direction.Right;
-                    dPressed = true;
+                case 'A':
+                    direction = GameEngine.Direction.Left;
+                    aPressed = true;
                     break;
                 case 'S':
                     direction = GameEngine.Direction.Down;
                     sPressed = true;
                     break;
-                case 'A':
-                    direction = GameEngine.Direction.Left;
-                    aPressed = true;
+                case 'D':
+                    direction = GameEngine.Direction.Right;
+                    dPressed = true;
                     break;
             }
             if (!keyPressed) gameEngine.TriggerMovement(direction); // Move only if no movement keys are already pressed
-            keyPressed = wPressed || dPressed || sPressed || aPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
+            keyPressed = wPressed || aPressed || sPressed || dPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
             UpdateDisplay(); // Update display to show movement
         }
 
@@ -85,22 +85,17 @@ namespace GADE6122DavidTristanPOE
                 case 'W':
                     wPressed = false;
                     break;
-                case 'D':
-                    dPressed = false;
+                case 'A':
+                    aPressed = false;
                     break;
                 case 'S':
                     sPressed = false;
                     break;
-                case 'A':
-                    aPressed = false;
+                case 'D':
+                    dPressed = false;
                     break;
             }
-            keyPressed = wPressed || dPressed || sPressed || aPressed;
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            keyPressed = wPressed || aPressed || sPressed || dPressed;
         }
 
         private void UpdateDisplay()
