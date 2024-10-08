@@ -5,11 +5,12 @@ namespace GADE6122DavidTristanPOE
 {
     internal class GruntTile : EnemyTile
     {
+        // Constructor for GruntTile object
         public GruntTile(Position position) : base(position, 10,  1)
         {
         }
 
-        public override char Display => IsDead ? 'x' : 'Ϫ';
+        public override char Display => IsDead ? 'x' : 'Ϫ'; // The character that represents a GruntTile, when dead or alive
 
         public override bool GetMove(out Tile tile)
         {

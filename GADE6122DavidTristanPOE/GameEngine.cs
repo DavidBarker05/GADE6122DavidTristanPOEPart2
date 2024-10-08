@@ -74,23 +74,25 @@ namespace GADE6122DavidTristanPOE
             return success; // Indicate successful movement or not
         }
 
+        // Method used to move all enemies
         private void MoveEnemies()
         {
-            foreach (EnemyTile enemy in currentLevel.EnemyTiles)
+            foreach (EnemyTile enemy in currentLevel.EnemyTiles) // Loop through all enemies
             {
-                if (enemy.IsDead || !enemy.GetMove(out Tile targetTile)) continue;
-                currentLevel.SwopTiles(enemy, targetTile);
-                currentLevel.UpdateVision();
+                if (enemy.IsDead || !enemy.GetMove(out Tile targetTile)) continue; // If enemy is dead or cannot move skip them
+                currentLevel.SwopTiles(enemy, targetTile); // Move enemy
+                currentLevel.UpdateVision(); // Update vision
             }
         }
 
+        // Method used to trigger movement for the hero and enemies
         public void TriggerMovement(Direction direction)
         {
             bool heroMoved = MoveHero(direction); // Cause player to move in specified direction
-            if (heroMoved)
+            if (heroMoved) // See if the hero successfully moved that turn
             {
-                numMoves++;
-                if (numMoves % 2 == 0) MoveEnemies();
+                numMoves++; // Increment number of moves
+                if (numMoves % 2 == 0) MoveEnemies(); // Check if player has moved twice in order to move the enemies
             }
         }
 
@@ -107,24 +109,26 @@ namespace GADE6122DavidTristanPOE
             return targetTile is CharacterTile;
         }
 
+        // Method used to make all enemies attack
         private void EnemiesAttack()
         {
-            foreach (EnemyTile enemy in currentLevel.EnemyTiles)
+            foreach (EnemyTile enemy in currentLevel.EnemyTiles) // Loop through all enemies
             {
-                if (enemy.IsDead) continue;
-                CharacterTile[] targets = enemy.GetTargets();
-                foreach (CharacterTile target in targets)
+                if (enemy.IsDead) continue; // If enemy is dead skip them
+                CharacterTile[] targets = enemy.GetTargets(); // Retrieve all the characters the enemy can attack
+                foreach (CharacterTile target in targets) // Loop through all the characters the enemy can attack
                 {
-                    enemy.Attack(target);
+                    enemy.Attack(target); // Attack the character
                 }
             }
         }
 
+        // Method used to trigger movement for the hero and enemies
         public void TriggerAttack(Direction direction)
         {
-            bool heroAttacked = HeroAttack(direction);
-            if (heroAttacked) EnemiesAttack();
-            if (currentLevel.HeroTile.IsDead) gameState = GameState.GameOver;
+            bool heroAttacked = HeroAttack(direction); // Cause player to attack in specified direction
+            if (heroAttacked) EnemiesAttack(); // See if the hero successfully attacked that turn and cause enemies to attack if they have
+            if (currentLevel.HeroTile.IsDead) gameState = GameState.GameOver; // Set game state to be over if the hero is dead
         }
 
         // Generate new level and move character to it
@@ -139,7 +143,8 @@ namespace GADE6122DavidTristanPOE
 
         public override string ToString()
         {
-            return gameState == GameState.Complete ? "YOU WIN!!!" : gameState == GameState.GameOver ? "GAME OVER!" : currentLevel.ToString(); // Displays win state or current level if player hasn't won
+            // Displays if the player has won or lost or it displays the current level depending on the game state
+            return gameState == GameState.Complete ? "YOU WIN!!!" : gameState == GameState.GameOver ? "GAME OVER!" : gameState == GameState.InProgress ? currentLevel.ToString() : "";
         }
     }
 }

@@ -91,9 +91,9 @@ namespace GADE6122DavidTristanPOE
                     break;
             }
             if (!movePressed && (wPressed || aPressed || sPressed || dPressed)) gameEngine.TriggerMovement(moveDirection); // Move only if no movement keys are already pressed
-            movePressed = wPressed || aPressed || sPressed || dPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
-            if (!attackPressed && (upPressed || leftPressed || downPressed || rightPressed)) gameEngine.TriggerAttack(attackDirection);
-            attackPressed = upPressed || leftPressed || downPressed || rightPressed;
+            movePressed = wPressed || aPressed || sPressed || dPressed; // Set move key pressed to be if any key pressed, but after movement to ensure the player moves
+            if (!attackPressed && (upPressed || leftPressed || downPressed || rightPressed)) gameEngine.TriggerAttack(attackDirection); // Attack only if no movement keys are already pressed
+            attackPressed = upPressed || leftPressed || downPressed || rightPressed; // Set attack key pressed to be if any key pressed, but after movement to ensure the player moves
             UpdateDisplay(); // Update display to show movement
         }
 
@@ -135,7 +135,7 @@ namespace GADE6122DavidTristanPOE
         {
             lblDisplay.Text = gameEngine.ToString(); // Show level
             lblLevelNumber.Text = $"LEVEL {gameEngine.CurrentLevelNumber} OF {gameEngine.LevelAmt}"; // Show level number
-            lblHitPoints.Text = $"{gameEngine.HeroStats} HP"; // Show level number
+            lblHitPoints.Text = $"{gameEngine.HeroStats} HP"; // Show hero's health out of their maximum health
         }
 
     }

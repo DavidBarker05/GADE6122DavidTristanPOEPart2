@@ -2,6 +2,7 @@
 {
     internal abstract class PickupTile : Tile
     {
+        // Constructor for PickupTile object
         public PickupTile(Position position) : base(position)
         {
         }

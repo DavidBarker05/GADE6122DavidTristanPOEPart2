@@ -2,11 +2,12 @@
 {
     internal class HealthPickupTile : PickupTile
     {
+        // Constructor for HealthPickupTile object
         public HealthPickupTile(Position position) : base(position)
         {
         }
 
-        public override char Display => '+';
+        public override char Display => '+'; // The character that represents a HealthPickupTile
 
         public override void ApplyEffect(CharacterTile characterTile)
         {

@@ -10,7 +10,7 @@
         public Tile[] Vision { get { return vision; } }
         public bool IsDead { get { return hitPoints == 0; } }
 
-        // Read-only properties that expose the hit points
+        // Read-only properties that expose the hit points and the max hit points
         public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
         public int MaxHitPoints { get { return maxHitPoints; } }
 
