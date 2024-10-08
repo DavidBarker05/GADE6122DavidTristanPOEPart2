@@ -25,6 +25,7 @@ namespace GADE6122DavidTristanPOE
         private Random rnd = new Random(); // Random number generator for level sizes
         private GameState gameState = GameState.InProgress; // Current game state
         private int currentLevelNumber = 1; // Current level player is on
+        private int numMoves = 0;
 
         const int MIN_SIZE = 10; // Min size of level
         const int MAX_SIZE = 20; // Max size of level
@@ -60,15 +61,27 @@ namespace GADE6122DavidTristanPOE
                 if (success)
                 {
                     currentLevel.SwopTiles(heroTile, heroTile.Vision[(int)direction]); // Move to empty space
-                    heroTile.UpdateVision(currentLevel); // Update vision
+                    currentLevel.UpdateVision(); // Update vision
                 }
             }
             return success; // Indicate successful movement or not
         }
 
+        private void MoveEnemies()
+        {
+            foreach (EnemyTile enemy in currentLevel.EnemyTiles)
+            {
+                if (enemy.IsDead || !enemy.GetMove(out Tile targetTile)) continue;
+                currentLevel.SwopTiles(enemy, targetTile);
+                currentLevel.UpdateVision();
+            }
+        }
+
         public void TriggerMovement(Direction direction)
         {
             MoveHero(direction); // Cause player to move in specified direction
+            numMoves++;
+            if (numMoves % 2 == 0) MoveEnemies();
         }
 
         // Generate new level and move character to it
