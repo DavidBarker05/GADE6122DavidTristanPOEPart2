@@ -99,14 +99,14 @@ namespace GADE6122DavidTristanPOE
         private bool HeroAttack(Direction direction)
         {
             HeroTile heroTile = currentLevel.HeroTile;
-            Tile targetTile = null;
-            if ((int)direction < 4)
+            Tile targetTile;
+            if ((int)direction < 4) // Check if direction isn't "None"
             {
-                targetTile = heroTile.Vision[(int)direction];
-                if (targetTile is CharacterTile) heroTile.Attack((CharacterTile)targetTile);
+                targetTile = heroTile.Vision[(int)direction]; // Set the target tile to be the tile in the hero's vision in the position of the direction
+                if (targetTile is CharacterTile) heroTile.Attack((CharacterTile)targetTile); // If the target is a character attack
             }
-            else return false;
-            return targetTile is CharacterTile;
+            else return false; // Return that the attack failed if the direction is "None"
+            return targetTile is CharacterTile; // Return whether the target tile is a character or not to indicate the success of the attack
         }
 
         // Method used to make all enemies attack
