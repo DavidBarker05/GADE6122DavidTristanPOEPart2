@@ -38,16 +38,16 @@ namespace GADE6122DavidTristanPOE
 
         public override CharacterTile[] GetTargets()
         {
-            CharacterTile[] target = new CharacterTile[1];
-            foreach (Tile tile in Vision)
+            CharacterTile[] targets = new CharacterTile[Vision.Length];
+            for (int i = 0; i < Vision.Length; i++)
             {
-                if (tile is HeroTile)
+                if (Vision[i] is HeroTile)
                 {
-                    target[0] = (HeroTile)tile;
+                    targets[i] = (CharacterTile)Vision[i];
                     break;
                 }
             }
-            return target;
+            return targets;
         }
     }
 }
