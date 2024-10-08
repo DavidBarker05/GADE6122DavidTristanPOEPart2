@@ -1,4 +1,8 @@
-﻿namespace GADE6122DavidTristanPOE
+﻿using System;
+using System.Collections;
+using System.Linq;
+
+namespace GADE6122DavidTristanPOE
 {
     internal class GruntTile : EnemyTile
     {
@@ -10,14 +14,40 @@
 
         public override bool GetMove(out Tile tile)
         {
-            throw new System.NotImplementedException();
-            
+            bool hasEmpty = false;
+            foreach (Tile t in Vision)
+            {
+                hasEmpty |= t is EmptyTile;
+                if (hasEmpty) break;
+            }
+            if (!hasEmpty) tile = null;
+            else
+            {
+                Random random = new Random();
+                int index;
+                Tile emptyTile;
+                do
+                {
+                    index = random.Next(Vision.Length);
+                    emptyTile = Vision[index];
+                } while (!(emptyTile is EmptyTile));
+                tile = emptyTile;
+            }
+            return hasEmpty;
         }
 
         public override CharacterTile[] GetTargets()
         {
-            throw new System.NotImplementedException();
+            CharacterTile[] target = new CharacterTile[1];
+            foreach (Tile tile in Vision)
+            {
+                if (tile is HeroTile)
+                {
+                    target[0] = (HeroTile)tile;
+                    break;
+                }
+            }
+            return target;
         }
-        
     }
 }
