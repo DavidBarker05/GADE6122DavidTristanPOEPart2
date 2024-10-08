@@ -48,11 +48,12 @@
             characterTile.TakeDamage(attackPower);
         }
 
+        // Heal lost hit points
         public void Heal(int hitPoints)
         {
             if (IsDead) return;
             this.hitPoints += hitPoints;
-            if (hitPoints > maxHitPoints) hitPoints = maxHitPoints;
+            if (hitPoints > maxHitPoints) this.hitPoints = maxHitPoints;
         }
     }
 }
