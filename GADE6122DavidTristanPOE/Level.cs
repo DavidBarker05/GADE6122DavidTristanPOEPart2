@@ -11,7 +11,8 @@ namespace GADE6122DavidTristanPOE
             WallTile,
             HeroTile,
             ExitTile,
-            EnemyTile
+            EnemyTile,
+            PickupTile
         }
 
         private Tile[,] tiles; // Level's tiles
@@ -19,20 +20,22 @@ namespace GADE6122DavidTristanPOE
         private HeroTile heroTile; // Hero
         private ExitTile exitTile; // Level exit
         private EnemyTile[] enemyTiles; // Enemy
+        private PickupTile[] pickupTiles; // Health pick ups
 
         // Read-only properties to expose fields that need to be read in other classes
         public HeroTile HeroTile { get { return heroTile; } }
         public ExitTile ExitTile { get { return exitTile; } }
         public Tile[,] Tiles { get {  return tiles; }}
-
         public EnemyTile[] EnemyTiles { get { return enemyTiles; } }
+        public PickupTile[] PickupTiles { get { return pickupTiles; }}
 
         // Constructor for Level object, heroTile is optional with a default value of null
-        public Level(int width, int height, int enemyNum, HeroTile heroTile = null)
+        public Level(int width, int height, int enemyNum, int pickupNum, Position pickup, HeroTile heroTile = null)
         {
             this.width = width;
             this.height = height;
             int[] EnemyNum = new int[enemyNum];
+            int[] PickupNum = new int[pickupNum];
             tiles = new Tile[width, height];
             InitialiseTiles(); // Initialise level
             Position heroPos = GetRandomEmptyPosition(); // Find free space in level for hero
@@ -53,6 +56,14 @@ namespace GADE6122DavidTristanPOE
                 enemyTiles[i] = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos);
             }
             UpdateVision();
+            Position pickupPos;
+            pickupTiles = new PickupTile[pickupNum];
+            for (int i = 0; i < pickupNum; i++)
+            {
+                pickupNum = GetRandomEmptyPosition();
+                pickupTiles = (PickupTile)CreateTile(TileType.PickupTile, pickupPos);
+            }
+            
         }
 
         // Create new Tile child object based off of the tile's type and position
@@ -75,6 +86,9 @@ namespace GADE6122DavidTristanPOE
                     break;
                 case TileType.EnemyTile: 
                     tile = new GruntTile(position);
+                    break;
+                case TileType.PickupTile:
+                    tile = new HealthPickupTile(position);
                     break;
             }
             tiles[position.X, position.Y] = tile;

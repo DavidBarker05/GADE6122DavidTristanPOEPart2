@@ -44,7 +44,7 @@ namespace GADE6122DavidTristanPOE
             this.levelAmt = levelAmt;
             int width = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll width of level
             int height = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll height of level
-            currentLevel = new Level(width, height, currentLevelNumber);
+            currentLevel = new Level(width, height, currentLevelNumber, Pickup);
         }
 
         private bool MoveHero(Direction direction)
@@ -129,7 +129,7 @@ namespace GADE6122DavidTristanPOE
             HeroTile heroTile = currentLevel.HeroTile;
             int width = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll width of level
             int height = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll height of level
-            currentLevel = new Level(width, height, currentLevelNumber, heroTile);
+            currentLevel = new Level(width, height, currentLevelNumber, Pickup, heroTile);
         }
 
         public override string ToString()
