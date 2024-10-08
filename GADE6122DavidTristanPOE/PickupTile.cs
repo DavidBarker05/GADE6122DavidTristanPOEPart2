@@ -7,6 +7,6 @@
         {
         }
 
-        public abstract void ApplyEffect(CharacterTile characterTile);
+        public abstract void ApplyEffect(CharacterTile characterTile); // Method to be called for all instances of PickupTile in order to affect the character
     }
 }
