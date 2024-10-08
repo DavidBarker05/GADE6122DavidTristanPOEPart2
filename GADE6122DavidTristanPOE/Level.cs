@@ -48,22 +48,21 @@ namespace GADE6122DavidTristanPOE
             }
             Position exitPos = GetRandomEmptyPosition(); // Find free space in level for exit
             exitTile = (ExitTile)CreateTile(TileType.ExitTile, exitPos); // Create and place exit in level
-            enemyTiles = new EnemyTile[enemyNum];
-            Position enemyPos;
-            for (int i = 0; i < enemyNum; i++)
+            enemyTiles = new EnemyTile[enemyNum]; // Set the size of the enemy array
+            Position enemyPos; // Empty position used to place enemies
+            for (int i = 0; i < enemyNum; i++) // Loop through the number of enemies
             {
-                enemyPos = GetRandomEmptyPosition();
-                enemyTiles[i] = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos);
+                enemyPos = GetRandomEmptyPosition(); // Find free space in level for enemy
+                enemyTiles[i] = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos); // Create new enemy
             }
-            UpdateVision();
-            Position pickupPos;
-            pickupTiles = new PickupTile[pickupNum];
-            for (int i = 0; i < pickupNum; i++)
+            pickupTiles = new PickupTile[pickupNum]; // Set the size of the pickup array
+            Position pickupPos; // Empty position used to place pickups
+            for (int i = 0; i < pickupNum; i++) // Loop through the number of enemies
             {
-                pickupPos = GetRandomEmptyPosition();
-                pickupTiles[i] = (PickupTile)CreateTile(TileType.PickupTile, pickupPos);
+                pickupPos = GetRandomEmptyPosition(); // Find free space in level for pickup
+                pickupTiles[i] = (PickupTile)CreateTile(TileType.PickupTile, pickupPos); // Create new pickup
             }
-            
+            UpdateVision(); // Update vision for the start of the game
         }
 
         // Create new Tile child object based off of the tile's type and position
@@ -139,6 +138,7 @@ namespace GADE6122DavidTristanPOE
             tile2.Position = _position;
         }
 
+        // Update the vision for the hero and all enemies in the level
         public void UpdateVision()
         {
             heroTile.UpdateVision(this);
@@ -148,12 +148,13 @@ namespace GADE6122DavidTristanPOE
             }
         }
 
+        // Method used to replace a pickup with an empty tile
         public void GrabPickup(PickupTile pickup)
         {
-            List<PickupTile> pickups = new List<PickupTile>(pickupTiles);
-            pickups.Remove(pickup);
-            pickupTiles = pickups.ToArray();
-            CreateTile(TileType.EmptyTile, pickup.Position);
+            List<PickupTile> pickups = new List<PickupTile>(pickupTiles); // Create a list of all pickups in the level so that it's easier to remove one pickup
+            pickups.Remove(pickup); // Remove the pickup from the list
+            pickupTiles = pickups.ToArray(); // Set the pickupTiles array to be the shortened list
+            CreateTile(TileType.EmptyTile, pickup.Position); // Replace the tile that contains the pickup in the array with an empty tile
         }
 
         // To string method to output all the tiles in the level
