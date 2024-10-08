@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace GADE6122DavidTristanPOE
 {
@@ -30,11 +31,12 @@ namespace GADE6122DavidTristanPOE
         const int MIN_SIZE = 10; // Min size of level
         const int MAX_SIZE = 20; // Max size of level
 
+        public Level CurrentLevel { get { return currentLevel; } }
+
         // Read-only properties that expose the max amount of levels, the current level, the hit points and the max hit points of the hero to be displayed on the form
         public int LevelAmt { get { return levelAmt; } }
         public int CurrentLevelNumber { get { return currentLevelNumber; } }
-        public int HeroHitPoints { get { return currentLevel.HeroTile.HitPoints; } }
-        public int HeroMaxHitPoints { get { return currentLevel.HeroTile.MaxHitPoints; } }
+        public string HeroStats => $"{currentLevel.HeroTile.HitPoints}/40";
 
         // Constructor for GameEngine object
         public GameEngine(int levelAmt)
@@ -79,9 +81,45 @@ namespace GADE6122DavidTristanPOE
 
         public void TriggerMovement(Direction direction)
         {
-            MoveHero(direction); // Cause player to move in specified direction
-            numMoves++;
-            if (numMoves % 2 == 0) MoveEnemies();
+            bool heroMoved = MoveHero(direction); // Cause player to move in specified direction
+            if (heroMoved)
+            {
+                numMoves++;
+                if (numMoves % 2 == 0) MoveEnemies();
+            }
+        }
+
+        private bool HeroAttack(Direction direction)
+        {
+            HeroTile heroTile = currentLevel.HeroTile;
+            Tile targetTile = null;
+            if ((int)direction < 4)
+            {
+                targetTile = heroTile.Vision[(int)direction];
+                if (targetTile is CharacterTile) heroTile.Attack((CharacterTile)targetTile);
+            }
+            else return false;
+            return targetTile is CharacterTile;
+        }
+
+        private void EnemiesAttack()
+        {
+            foreach (EnemyTile enemy in currentLevel.EnemyTiles)
+            {
+                if (enemy.IsDead) continue;
+                CharacterTile[] targets = enemy.GetTargets();
+                foreach (CharacterTile target in targets)
+                {
+                    enemy.Attack(target);
+                }
+            }
+        }
+
+        public void TriggerAttack(Direction direction)
+        {
+            bool heroAttacked = HeroAttack(direction);
+            if (heroAttacked) EnemiesAttack();
+            if (currentLevel.HeroTile.IsDead) gameState = GameState.GameOver;
         }
 
         // Generate new level and move character to it
@@ -96,7 +134,7 @@ namespace GADE6122DavidTristanPOE
 
         public override string ToString()
         {
-            return gameState == GameState.Complete ? "YOU WIN!!!" : currentLevel.ToString(); // Displays win state or current level if player hasn't won
+            return gameState == GameState.Complete ? "YOU WIN!!!" : gameState == GameState.GameOver ? "GAME OVER!" : currentLevel.ToString(); // Displays win state or current level if player hasn't won
         }
     }
 }

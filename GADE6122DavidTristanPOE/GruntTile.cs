@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace GADE6122DavidTristanPOE
 {
@@ -10,7 +10,7 @@ namespace GADE6122DavidTristanPOE
         {
         }
 
-        public override char Display => IsDead ? 'Ϫ' : 'Ϫ';
+        public override char Display => IsDead ? 'x' : 'Ϫ';
 
         public override bool GetMove(out Tile tile)
         {
@@ -38,16 +38,16 @@ namespace GADE6122DavidTristanPOE
 
         public override CharacterTile[] GetTargets()
         {
-            ArrayList targets = new ArrayList();
+            List<CharacterTile> targets = new List<CharacterTile>();
             foreach (Tile tile in Vision)
             {
                 if (tile is HeroTile)
                 {
-                    targets.Add(tile);
+                    targets.Add((CharacterTile)tile);
                     break;
                 }
             }
-            return (CharacterTile[])targets.ToArray();
+            return targets.ToArray();
         }
     }
 }

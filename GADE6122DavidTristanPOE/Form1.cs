@@ -1,5 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace GADE6122DavidTristanPOE
 {
@@ -8,8 +7,10 @@ namespace GADE6122DavidTristanPOE
 
         private GameEngine gameEngine; // Game engine
         // The booleans are to make sure player presses only one key once
-        bool wPressed = false, dPressed = false, sPressed = false, aPressed = false; // Booleans to show if buttons are already being pressed
-        private bool keyPressed = false; // Boolean for if any key is pressed
+        private bool wPressed = false, aPressed = false, sPressed = false, dPressed = false; // Booleans to show if buttons are already being pressed
+        private bool movePressed = false; // Boolean for if any key is pressed
+        private bool upPressed = false, leftPressed = false, downPressed = false, rightPressed = false;
+        private bool attackPressed = false;
 
         public Form1()
         {
@@ -52,57 +53,89 @@ namespace GADE6122DavidTristanPOE
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            GameEngine.Direction direction = GameEngine.Direction.None;
-            switch ((char)e.KeyValue) // Check key input and make direction correspond to key
+            GameEngine.Direction moveDirection = GameEngine.Direction.None;
+            GameEngine.Direction attackDirection = GameEngine.Direction.None;
+            switch (e.KeyCode) // Check key input and make direction correspond to key
             {
-                case 'W':
-                    direction = GameEngine.Direction.Up;
+                case Keys.W:
+                    moveDirection = GameEngine.Direction.Up;
                     wPressed = true;
                     break;
-                case 'A':
-                    direction = GameEngine.Direction.Left;
+                case Keys.A:
+                    moveDirection = GameEngine.Direction.Left;
                     aPressed = true;
                     break;
-                case 'S':
-                    direction = GameEngine.Direction.Down;
+                case Keys.S:
+                    moveDirection = GameEngine.Direction.Down;
                     sPressed = true;
                     break;
-                case 'D':
-                    direction = GameEngine.Direction.Right;
+                case Keys.D:
+                    moveDirection = GameEngine.Direction.Right;
                     dPressed = true;
                     break;
+                case Keys.Up:
+                    attackDirection = GameEngine.Direction.Up;
+                    upPressed = true;
+                    break;
+                case Keys.Left:
+                    attackDirection = GameEngine.Direction.Left;
+                    leftPressed = true;
+                    break;
+                case Keys.Down:
+                    attackDirection = GameEngine.Direction.Down;
+                    downPressed = true;
+                    break;
+                case Keys.Right:
+                    attackDirection = GameEngine.Direction.Right;
+                    rightPressed = true;
+                    break;
             }
-            if (!keyPressed) gameEngine.TriggerMovement(direction); // Move only if no movement keys are already pressed
-            keyPressed = wPressed || aPressed || sPressed || dPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
+            if (!movePressed && (wPressed || aPressed || sPressed || dPressed)) gameEngine.TriggerMovement(moveDirection); // Move only if no movement keys are already pressed
+            movePressed = wPressed || aPressed || sPressed || dPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
+            if (!attackPressed && (upPressed || leftPressed || downPressed || rightPressed)) gameEngine.TriggerAttack(attackDirection);
+            movePressed = upPressed || leftPressed || downPressed || rightPressed;
             UpdateDisplay(); // Update display to show movement
         }
 
         // Reset that a key is pressed when it is release
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
-            switch ((char)e.KeyValue)
+            switch (e.KeyCode)
             {
-                case 'W':
+                case Keys.W:
                     wPressed = false;
                     break;
-                case 'A':
+                case Keys.A:
                     aPressed = false;
                     break;
-                case 'S':
+                case Keys.S:
                     sPressed = false;
                     break;
-                case 'D':
+                case Keys.D:
                     dPressed = false;
                     break;
+                case Keys.Up:
+                    upPressed = false;
+                    break;
+                case Keys.Left:
+                    leftPressed = false;
+                    break;
+                case Keys.Down:
+                    downPressed = false;
+                    break;
+                case Keys.Right:
+                    rightPressed = false;
+                    break;
             }
-            keyPressed = wPressed || aPressed || sPressed || dPressed;
+            movePressed = wPressed || aPressed || sPressed || dPressed;
+            movePressed = upPressed || leftPressed || downPressed || rightPressed;
         }
 
         private void UpdateDisplay()
         {
             lblDisplay.Text = gameEngine.ToString(); // Show level
             lblLevelNumber.Text = $"LEVEL {gameEngine.CurrentLevelNumber} OF {gameEngine.LevelAmt}"; // Show level number
-            lblHitPoints.Text = $"{gameEngine.HeroHitPoints}/{gameEngine.HeroMaxHitPoints} HIT POINTS"; // Show level number
+            lblHitPoints.Text = $"{gameEngine.HeroStats} HP"; // Show level number
         }
 
     }
