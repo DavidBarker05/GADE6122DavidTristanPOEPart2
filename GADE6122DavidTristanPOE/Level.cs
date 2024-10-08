@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Deployment.Application;
 
 namespace GADE6122DavidTristanPOE
 {
@@ -9,24 +10,30 @@ namespace GADE6122DavidTristanPOE
             EmptyTile,
             WallTile,
             HeroTile,
-            ExitTile
+            ExitTile,
+            EnemyTile
         }
 
         private Tile[,] tiles; // Level's tiles
         private int width, height; // Level's width and height
+        private readonly int enemyNum;
         private HeroTile heroTile; // Hero
         private ExitTile exitTile; // Level exit
+        private EnemyTile enemyTile; // Enemy
 
         // Read-only properties to expose fields that need to be read in other classes
         public HeroTile HeroTile { get { return heroTile; } }
         public ExitTile ExitTile { get { return exitTile; } }
         public Tile[,] Tiles { get {  return tiles; }}
 
+        public EnemyTile EnemyTile { get { return enemyTile; } }
+
         // Constructor for Level object, heroTile is optional with a default value of null
         public Level(int width, int height, HeroTile heroTile = null)
         {
             this.width = width;
             this.height = height;
+            int[] EnemyNum = new int[enemyNum];
             tiles = new Tile[width, height];
             InitialiseTiles(); // Initialise level
             Position heroPos = GetRandomEmptyPosition(); // Find free space in level for hero
@@ -40,6 +47,16 @@ namespace GADE6122DavidTristanPOE
             Position exitPos = GetRandomEmptyPosition(); // Find free space in level for exit
             exitTile = (ExitTile)CreateTile(TileType.ExitTile, exitPos); // Create and place exit in level
             this.heroTile.UpdateVision(this); // Update hero vision
+
+            Position enemyPos = GetRandomEmptyPosition();
+            enemyTile = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos);
+
+
+        }
+
+        public void UpdateVision(HeroTile heroTile, EnemyTile enemyTile)
+        {
+
         }
 
         // Create new Tile child object based off of the tile's type and position
@@ -59,6 +76,9 @@ namespace GADE6122DavidTristanPOE
                     break;
                 case TileType.ExitTile:
                     tile = new ExitTile(position);
+                    break;
+                case TileType.EnemyTile: 
+                    tile = new EnemyTile(position);
                     break;
             }
             tiles[position.X, position.Y] = tile;
