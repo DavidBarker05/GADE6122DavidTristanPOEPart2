@@ -30,7 +30,7 @@ namespace GADE6122DavidTristanPOE
         public PickupTile[] PickupTiles { get { return pickupTiles; }}
 
         // Constructor for Level object, heroTile is optional with a default value of null
-        public Level(int width, int height, int enemyNum, int pickupNum, Position pickup, HeroTile heroTile = null)
+        public Level(int width, int height, int enemyNum, int pickupNum, HeroTile heroTile = null)
         {
             this.width = width;
             this.height = height;
@@ -60,8 +60,8 @@ namespace GADE6122DavidTristanPOE
             pickupTiles = new PickupTile[pickupNum];
             for (int i = 0; i < pickupNum; i++)
             {
-                pickupNum = GetRandomEmptyPosition();
-                pickupTiles = (PickupTile)CreateTile(TileType.PickupTile, pickupPos);
+                pickupPos = GetRandomEmptyPosition();
+                pickupTiles[i] = (PickupTile)CreateTile(TileType.PickupTile, pickupPos);
             }
             
         }
