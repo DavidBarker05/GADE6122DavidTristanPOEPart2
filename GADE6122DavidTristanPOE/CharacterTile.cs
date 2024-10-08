@@ -11,7 +11,8 @@
         public bool IsDead { get { return hitPoints == 0; } }
 
         // Read-only properties that expose the hit points
-        public int HitPoints { get { return hitPoints; } }
+        public int HitPoints { get { return hitPoints; } set { hitPoints = value; } }
+        public int MaxHitPoints { get { return maxHitPoints; } }
 
         // Constructor for CharacterTile object
         public CharacterTile(Position position, int hitPoints, int attackPower) : base(position)

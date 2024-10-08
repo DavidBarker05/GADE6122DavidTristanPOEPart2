@@ -59,6 +59,12 @@ namespace GADE6122DavidTristanPOE
                     else NextLevel(); // Move to nect level if not
                     return currentLevelNumber < levelAmt; // Return early with true if not final level
                 }
+                if (heroTile.Vision[(int)direction] is HealthPickupTile) // See if destination is exit
+                {
+                    ((HealthPickupTile)heroTile.Vision[(int)direction]).ApplyEffect(currentLevel.HeroTile);
+                    currentLevel.GrabPickup((HealthPickupTile)heroTile.Vision[(int)direction]);
+                    currentLevel.UpdateVision(); // Update vision
+                }
                 success = heroTile.Vision[(int)direction] is EmptyTile; // Successful movement to empty space
                 if (success)
                 {
@@ -129,7 +135,7 @@ namespace GADE6122DavidTristanPOE
             HeroTile heroTile = currentLevel.HeroTile;
             int width = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll width of level
             int height = rnd.Next(MIN_SIZE, MAX_SIZE + 1); // Roll height of level
-            currentLevel = new Level(width, height, currentLevelNumber, Pickup, heroTile);
+            currentLevel = new Level(width, height, currentLevelNumber, 1, heroTile);
         }
 
         public override string ToString()

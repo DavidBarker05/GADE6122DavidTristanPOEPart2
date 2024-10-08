@@ -11,6 +11,7 @@
         public override void ApplyEffect(CharacterTile characterTile)
         {
             characterTile.Heal(10);
+            if (characterTile.HitPoints > characterTile.MaxHitPoints) characterTile.HitPoints = characterTile.MaxHitPoints;
         }
     }
 }

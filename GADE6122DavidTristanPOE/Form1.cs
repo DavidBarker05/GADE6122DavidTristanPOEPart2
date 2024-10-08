@@ -93,7 +93,7 @@ namespace GADE6122DavidTristanPOE
             if (!movePressed && (wPressed || aPressed || sPressed || dPressed)) gameEngine.TriggerMovement(moveDirection); // Move only if no movement keys are already pressed
             movePressed = wPressed || aPressed || sPressed || dPressed; // Set key pressed to be if any key pressed, but after movement to ensure the player moves
             if (!attackPressed && (upPressed || leftPressed || downPressed || rightPressed)) gameEngine.TriggerAttack(attackDirection);
-            movePressed = upPressed || leftPressed || downPressed || rightPressed;
+            attackPressed = upPressed || leftPressed || downPressed || rightPressed;
             UpdateDisplay(); // Update display to show movement
         }
 
@@ -128,7 +128,7 @@ namespace GADE6122DavidTristanPOE
                     break;
             }
             movePressed = wPressed || aPressed || sPressed || dPressed;
-            movePressed = upPressed || leftPressed || downPressed || rightPressed;
+            attackPressed = upPressed || leftPressed || downPressed || rightPressed;
         }
 
         private void UpdateDisplay()

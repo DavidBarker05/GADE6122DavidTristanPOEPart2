@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Deployment.Application;
 
 namespace GADE6122DavidTristanPOE
@@ -146,6 +147,14 @@ namespace GADE6122DavidTristanPOE
             {
                 enemy.UpdateVision(this);
             }
+        }
+
+        public void GrabPickup(PickupTile pickup)
+        {
+            List<PickupTile> pickups = new List<PickupTile>(pickupTiles);
+            pickups.Remove(pickup);
+            pickupTiles = pickups.ToArray();
+            CreateTile(TileType.EmptyTile, pickup.Position);
         }
 
         // To string method to output all the tiles in the level
