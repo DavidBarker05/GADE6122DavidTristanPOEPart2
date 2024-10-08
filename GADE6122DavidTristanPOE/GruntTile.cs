@@ -11,7 +11,7 @@
         public override bool GetMove(out Tile tile)
         {
             throw new System.NotImplementedException();
-
+            
         }
 
         public override CharacterTile[] GetTargets()
