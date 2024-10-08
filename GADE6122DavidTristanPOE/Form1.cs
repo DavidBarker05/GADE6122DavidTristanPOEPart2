@@ -7,10 +7,10 @@ namespace GADE6122DavidTristanPOE
 
         private GameEngine gameEngine; // Game engine
         // The booleans are to make sure player presses only one key once
-        private bool wPressed = false, aPressed = false, sPressed = false, dPressed = false; // Booleans to show if buttons are already being pressed
-        private bool movePressed = false; // Boolean for if any key is pressed
-        private bool upPressed = false, leftPressed = false, downPressed = false, rightPressed = false;
-        private bool attackPressed = false;
+        private bool wPressed = false, aPressed = false, sPressed = false, dPressed = false; // Booleans to show if movement buttons are already being pressed
+        private bool movePressed = false; // Boolean for if any movement key is pressed
+        private bool upPressed = false, leftPressed = false, downPressed = false, rightPressed = false; // Booleans to show if attack buttons are already being pressed
+        private bool attackPressed = false; // Boolean for if any attack key is pressed
 
         public Form1()
         {
