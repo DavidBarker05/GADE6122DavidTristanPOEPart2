@@ -10,7 +10,7 @@ namespace GADE6122DavidTristanPOE
         {
         }
 
-        public override char Display => IsDead ? 'Ϫ' : '▼';
+        public override char Display => IsDead ? 'Ϫ' : 'Ϫ';
 
         public override bool GetMove(out Tile tile)
         {
@@ -38,16 +38,16 @@ namespace GADE6122DavidTristanPOE
 
         public override CharacterTile[] GetTargets()
         {
-            CharacterTile[] target = new CharacterTile[1];
+            ArrayList targets = new ArrayList();
             foreach (Tile tile in Vision)
             {
                 if (tile is HeroTile)
                 {
-                    target[0] = (HeroTile)tile;
+                    targets.Add(tile);
                     break;
                 }
             }
-            return target;
+            return (CharacterTile[])targets.ToArray();
         }
     }
 }

@@ -16,20 +16,19 @@ namespace GADE6122DavidTristanPOE
 
         private Tile[,] tiles; // Level's tiles
         private int width, height; // Level's width and height
-        private readonly int enemyNum;
         private HeroTile heroTile; // Hero
         private ExitTile exitTile; // Level exit
-        private EnemyTile enemyTile; // Enemy
+        private EnemyTile[] enemyTiles; // Enemy
 
         // Read-only properties to expose fields that need to be read in other classes
         public HeroTile HeroTile { get { return heroTile; } }
         public ExitTile ExitTile { get { return exitTile; } }
         public Tile[,] Tiles { get {  return tiles; }}
 
-        public EnemyTile EnemyTile { get { return enemyTile; } }
+        public EnemyTile[] EnemyTiles { get { return enemyTiles; } }
 
         // Constructor for Level object, heroTile is optional with a default value of null
-        public Level(int width, int height, HeroTile heroTile = null)
+        public Level(int width, int height, int enemyNum, HeroTile heroTile = null)
         {
             this.width = width;
             this.height = height;
@@ -46,17 +45,14 @@ namespace GADE6122DavidTristanPOE
             }
             Position exitPos = GetRandomEmptyPosition(); // Find free space in level for exit
             exitTile = (ExitTile)CreateTile(TileType.ExitTile, exitPos); // Create and place exit in level
-            this.heroTile.UpdateVision(this); // Update hero vision
-
-            Position enemyPos = GetRandomEmptyPosition();
-            enemyTile = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos);
-
-
-        }
-
-        public void UpdateVision(HeroTile heroTile, EnemyTile enemyTile)
-        {
-
+            enemyTiles = new EnemyTile[enemyNum];
+            Position enemyPos;
+            for (int i = 0; i < enemyNum; i++)
+            {
+                enemyPos = GetRandomEmptyPosition();
+                enemyTiles[i] = (EnemyTile)CreateTile(TileType.EnemyTile, enemyPos);
+            }
+            UpdateVision();
         }
 
         // Create new Tile child object based off of the tile's type and position
@@ -78,7 +74,7 @@ namespace GADE6122DavidTristanPOE
                     tile = new ExitTile(position);
                     break;
                 case TileType.EnemyTile: 
-                    tile = new EnemyTile(position);
+                    tile = new GruntTile(position);
                     break;
             }
             tiles[position.X, position.Y] = tile;
@@ -127,6 +123,15 @@ namespace GADE6122DavidTristanPOE
             tile1.Position = tile2.Position;
             tiles[tile2.X, tile2.Y] = _tile;
             tile2.Position = _position;
+        }
+
+        public void UpdateVision()
+        {
+            heroTile.UpdateVision(this);
+            foreach (EnemyTile enemy in EnemyTiles)
+            {
+                enemy.UpdateVision(this);
+            }
         }
 
         // To string method to output all the tiles in the level
